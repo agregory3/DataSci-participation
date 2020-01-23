@@ -10,7 +10,7 @@ output:
 ---
 
 
-# packages
+## packages
 ```{r}
  library(gapminder)
  library(DT)
