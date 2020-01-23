@@ -1,7 +1,7 @@
 # helpful links
 
 1. My participation repository
-  * https://github.com/agregory3/DataSci-participation
+    * https://github.com/agregory3/DataSci-participation
 
 2. My GitHub profile
     *https://github.com/agregory3
