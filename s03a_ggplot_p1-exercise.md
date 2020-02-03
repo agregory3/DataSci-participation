@@ -30,6 +30,115 @@ knitr::opts_chunk$set(fig.align = "center")
 <!---The following chunk allows errors when knitting--->
 
 
+```r
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point(alpha = 0.1) +
+  scale_x_log10("GDP per capita", labels = scales::dollar_format()) +
+  theme_bw() +
+  ylab("Life Expectancy")
+```
+
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
+
+?geom_point 
+
+```r
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point(alpha = 0.1)
+```
+
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+
+
+```r
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point()
+```
+
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+
+
+```r
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point(alpha = 0.1)
+```
+
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+
+
+```r
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point(alpha = 0.1, color= "red")
+```
+
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+
+
+```r
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point(alpha = 0.1)
+```
+
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+
+start with gdp to get it on x axis
+dollar format?
+
+```r
+?dollar_format
+```
+
+
+```r
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point(alpha = 0.1) +
+  scale_x_log10("GDP per capita", labels = scales::dollar_format())
+```
+
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+
+```r
+?scale_x_log10
+```
+
+
+```r
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point(alpha = 0.1) +
+  scale_x_log10("GDP per capita", labels = scales::dollar_format()) +
+  theme_bw() +
+  ylab("Life Expectancy")
+```
+
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+ changing background to make this clear and understandable
+ 
+ 
+ 
+
+```r
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point(alpha = 0.1) +
+  scale_x_log10("GDP per capita", labels = scales::dollar_format()) +
+  theme_bw() +
+  ylab("Life Expectancy")
+```
+
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+
+
+```r
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+  geom_point(alpha = 0.1) +
+  scale_x_log10("GDP per capita", labels = scales::dollar_format()) +
+  theme_bw() +
+  ylab("Life Expectancy")
+```
+
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+
+
+
 
 ## Exercise 1: Bar Chart Grammar (Together)
 
@@ -45,19 +154,19 @@ gapminder %>%
   theme_bw()
 ```
 
-<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" />
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
 
 Fill in the seven grammar components for this plot.
 
 | Grammar Component     | Specification |
 |-----------------------|---------------|
 | __data__              | `gapminder` |
-| __aesthetic mapping__ | FILL_THIS_IN |
-| __geometric object__  | FILL_THIS_IN |
-| scale                 | FILL_THIS_IN |
-| statistical transform | FILL_THIS_IN |
-| coordinate system     | FILL_THIS_IN |
-| facetting             | FILL_THIS_IN |
+| __aesthetic mapping__ |  X = `continent` , Y = `..count..` |
+| __geometric object__  | bar |
+| scale                 | linear |
+| statistical transform | none |
+| coordinate system     | rectangular |
+| facetting             | none |
 
 ## Exercise 2: `ggplot2` Syntax (Your Turn)
 
@@ -106,12 +215,16 @@ Fill in the blanks to obtain the plot:
 
 
 ```r
-ggplot(FILL_THIS_IN, aes(FILL_THIS_IN, FILL_THIS_IN)) +
-  FILL_THIS_IN()
+ggplot(mauna, aes(month, conc)) + 
+  geom_line() +
+  scales::
 ```
 
 ```
-## Error in ggplot(FILL_THIS_IN, aes(FILL_THIS_IN, FILL_THIS_IN)): object 'FILL_THIS_IN' not found
+## Error: <text>:4:0: unexpected end of line
+## 2:   geom_line() +
+## 3:   scales::
+##   ^
 ```
 
 ### 2(b)
@@ -126,14 +239,10 @@ The following code mistakenly puts the month variable on the y-axis. Fill in the
 
 ```r
 ggplot(mauna, aes(y = month)) +
-  geom_line(aes(FILL_THIS_IN))
+  geom_line(aes(x = month, y = conc))
 ```
 
-```
-## Error in FUN(X[[i]], ...): object 'FILL_THIS_IN' not found
-```
-
-<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
 
 ### 2(c)
 
@@ -141,13 +250,13 @@ You can store the output of the plot in a variable, too. Store the plot from 2(a
 
 
 ```r
-p +
-  FILL_THIS_IN(colour = FILL_THIS_IN)
+p <- (ggplot(mauna, aes(month, conc)) + 
+  geom_line(colour = 'black'))
+
+p + ((geom_point(colour = 'green')))
 ```
 
-```
-## Error in eval(expr, envir, enclos): object 'p' not found
-```
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
 
 ### 2(d)
 
@@ -156,12 +265,10 @@ What's wrong with the following code? Fix it.
 
 ```r
 ggplot(gapminder) +
-  geom_point(x = gdpPercap, y = lifeExp, alpha = 0.1)
+  geom_point(aes(x = gdpPercap, y = lifeExp), alpha = 0.1)
 ```
 
-```
-## Error in layer(data = data, mapping = mapping, stat = stat, geom = GeomPoint, : object 'gdpPercap' not found
-```
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
 
 
 ### 2(e) BONUS
@@ -169,15 +276,15 @@ ggplot(gapminder) +
 So you're a ggplot2 pro? Then, let's see this plot adapted to polar coordinates. Specifically:
 
 - angle is month (January through December)
-- radius is CO$_2$ concentration
+- radius is CO$_2$ concentration n
 
 The plot should look like a spiral, or concentric circles. 
 
 
 ```r
-FILL_THIS_IN
+ggplot(mauna, aes(month, conc)) + 
+  geom_line() + 
+  coord_polar()
 ```
 
-```
-## Error in eval(expr, envir, enclos): object 'FILL_THIS_IN' not found
-```
+<img src="s03a_ggplot_p1-exercise_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" />

@@ -211,7 +211,7 @@ ggplot(gapminder) +
 So you're a ggplot2 pro? Then, let's see this plot adapted to polar coordinates. Specifically:
 
 - angle is month (January through December)
-- radius is CO$_2$ concentration
+- radius is CO$_2$ concentration n
 
 The plot should look like a spiral, or concentric circles. 
 
