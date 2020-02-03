@@ -19,7 +19,8 @@ The exercsies below include some data wrangling function. It's okay if you
 aren't familiar with them all yet! We will get into a lot of them over the
 next few weeks, but see if you can figure out what they are doing as you go.
 
-```{r, message = FALSE, warning = FALSE}
+
+```r
 library(tidyverse)
 library(gapminder)
 library(ggridges)
@@ -28,9 +29,7 @@ library(scales)
 
 <!-- The following chunk allows errors when knitting -->
 
-```{r allow errors, echo = FALSE}
-knitr::opts_chunk$set(error = TRUE, warning = FALSE)
-```
+
 
 
 ## Exercise 1: Overlapping Points
@@ -38,10 +37,13 @@ knitr::opts_chunk$set(error = TRUE, warning = FALSE)
 Fix the overlapping data points problem in the following plot by adding an `alpha`
 or `size` argument (attribution: ["R for data science"](https://r4ds.had.co.nz/data-visualisation.html)).
 
-```{r, fig.width = 5, fig.height = 2}
+
+```r
 ggplot(mpg, aes(cty, hwy)) + 
   geom_point(alpha = 0.3)
 ```
+
+![](s03b_ggplot_p2-exercise_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 
 ## Exercise 2: Line for each Country
@@ -52,12 +54,15 @@ _for each country_.
 Notice that we tried to use `group_by()`. We will cover that next week. But 
 also notice that `ggplot2` ignores the grouping of a tibble!
 
-```{r, fig.width = 5, fig.height = 2}
+
+```r
 gapminder %>% 
   group_by(country) %>% 
   ggplot(aes(year, lifeExp)) +
   geom_line(aes(group = country))
 ```
+
+![](s03b_ggplot_p2-exercise_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 
 ## Exercise 3: More gdpPercap vs lifeExp
@@ -67,12 +72,15 @@ gapminder %>%
 - Change the x-axis text to be in "comma format" with `scales::comma_format()`.
 - Separate each continent into sub-panels.
 
-```{r, fig.width = 5, fig.height = 2}
+
+```r
 ggplot(gapminder, aes(gdpPercap, lifeExp)) +
   geom_point(alpha = 0.2) +
   scale_x_log10() +
   facet_wrap(vars(continent))
 ```
+
+![](s03b_ggplot_p2-exercise_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 ### 3(b) Bubble Plot
 
@@ -82,7 +90,8 @@ ggplot(gapminder, aes(gdpPercap, lifeExp)) +
     but that is not optimal for perception).
 - Use `shape=21` to distinguish between `fill` (interior) and `color` (exterior). 
 
-```{r, fig.width = 5, fig.height = 2}
+
+```r
 gapminder %>% 
   filter(continent != "Oceania") %>% 
   ggplot(aes(gdpPercap, lifeExp)) +
@@ -91,18 +100,23 @@ gapminder %>%
   scale_x_log10(labels = scales::comma_format())
 ```
 
+![](s03b_ggplot_p2-exercise_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+
 A list of shapes can be found [at the bottom of the `scale_shape` documentation](https://ggplot2.tidyverse.org/reference/scale_shape.html).
 
 ### 3(c) Size "not working"
 
 Instead of alpha transparency, suppose you're wanting to fix the overplotting issue by plotting small points. Why is this not working? Fix it.
 
-```{r, fig.width = 5, fig.height = 2}
+
+```r
 ggplot(gapminder) +
   geom_point(aes(gdpPercap, lifeExp, size = 0.1)) +
   scale_x_log10(labels = scales::dollar_format()) +
   scale_size_continuous(range = c(0.05, 0.05))
 ```
+
+![](s03b_ggplot_p2-exercise_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 
 ## Exercise 4: Walking caribou
@@ -113,7 +127,8 @@ The following mock data set marks the (x,y) position of a caribou at four time p
 - Add an arrow with `arrow = arrow()`.
 - Add the `time` label with `geom_text()`.
 
-```{r, fig.width = 5, fig.height = 2}
+
+```r
 tribble(
   ~time, ~x, ~y,
   1, 0.3, 0.3,
@@ -126,6 +141,8 @@ tribble(
   geom_text(label = "time")
 ```
 
+![](s03b_ggplot_p2-exercise_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
 ## Exercise 5: Life expectancies in Africa
 
 ### 5(a) Unhiding the data
@@ -134,7 +151,8 @@ Fix the plot so that you can actually see the data points.
 
 There is also the problem of overlapping text in the x-axis labels. How could we solve that?
 
-```{r, fig.width = 17, fig.height = 7}
+
+```r
 gapminder %>% 
   filter(continent == "Americas") %>% 
   ggplot(aes(country, lifeExp)) + 
@@ -142,16 +160,22 @@ gapminder %>%
   scale_x_discrete()
 ```
 
+![](s03b_ggplot_p2-exercise_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+
 ### 5(b) Ridgeplots
 
 We're starting with the same plot as above, but instead of the points + boxplot, try a ridge plot instead using `ggridges::geom_density_ridges()`, and adjust the `bandwidth`.
 
-```{r, fig.width = 5, fig.height = 2}
+
+```r
 gapminder %>% 
   filter(continent == "Americas") %>% 
-  ggplot(aes( x = country, y = lifeExp)) + 
-  geom_density_ridges(bandwidth = 50)
+  ggplot(aes(country, lifeExp)) + 
+  geom_point() +
+  geom_boxplot()
 ```
+
+![](s03b_ggplot_p2-exercise_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
 
 ## Exercise 6: Bar plot madness
 
@@ -164,45 +188,92 @@ gapminder %>%
 - Put the bars for transmission side-by-side with their own colour.
 - Capitalize the legend title.
 
-```{r, fig.width = 5, fig.height = 2}
+
+```r
 mtcars %>% 
   mutate(transmission = if_else(am == 0, "automatic", "manual")) %>% 
   ggplot(aes(cyl)) +
   geom_bar(aes(color = transmission))
 ```
 
+![](s03b_ggplot_p2-exercise_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+
 ### 6(b) Bar heights already calculated
 
 Here's the number of people having a certain hair colour from a sample of 592 people:
 
-```{r}
+
+```r
 (hair <- as_tibble(HairEyeColor) %>% 
   count(Hair, wt = n))
 ```
 
+```
+## # A tibble: 4 x 2
+##   Hair      n
+##   <chr> <dbl>
+## 1 Black   108
+## 2 Blond   127
+## 3 Brown   286
+## 4 Red      71
+```
+
 Fix the following bar plot so that it shows these counts.
 
-```{r}
+
+```r
 ggplot(hair, aes(Hair, n)) +
   geom_bar()
 ```
+
+```
+## Error: stat_count() must not be used with a y aesthetic.
+```
+
+![](s03b_ggplot_p2-exercise_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
 ## Exercise 7: Tiling
 
 Here's the number of people having a certain hair and eye colour from a sample of 592 people:
 
-```{r}
+
+```r
 (hair_eye <- as_tibble(HairEyeColor) %>% 
   count(Hair, Eye, wt = n))
+```
+
+```
+## # A tibble: 16 x 3
+##    Hair  Eye       n
+##    <chr> <chr> <dbl>
+##  1 Black Blue     20
+##  2 Black Brown    68
+##  3 Black Green     5
+##  4 Black Hazel    15
+##  5 Blond Blue     94
+##  6 Blond Brown     7
+##  7 Blond Green    16
+##  8 Blond Hazel    10
+##  9 Brown Blue     84
+## 10 Brown Brown   119
+## 11 Brown Green    29
+## 12 Brown Hazel    54
+## 13 Red   Blue     17
+## 14 Red   Brown    26
+## 15 Red   Green    14
+## 16 Red   Hazel    14
 ```
 
 Fix the following plot so that it shows a filled-in square for each combination. 
 _Hint:_ What's the title of this exercise?
 
-```{r}
+
+```r
 ggplot(hair_eye, aes(Hair, Eye)) +
   geom_point(aes(colour = n))
 ```
+
+![](s03b_ggplot_p2-exercise_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
 
 By the way, `geom_count()` is like `geom_bar()`: it counts the number of overlapping points.
 
