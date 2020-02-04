@@ -15,6 +15,7 @@ install.packages("ggridges")
 install.packages("scales")
 ```
 .
+.
 
 The exercsies below include some data wrangling function. It's okay if you
 aren't familiar with them all yet! We will get into a lot of them over the
