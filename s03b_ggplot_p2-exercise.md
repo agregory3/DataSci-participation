@@ -14,6 +14,7 @@ I think you might not have these two packages installed:
 install.packages("ggridges")
 install.packages("scales")
 ```
+.
 
 The exercsies below include some data wrangling function. It's okay if you
 aren't familiar with them all yet! We will get into a lot of them over the
@@ -170,9 +171,12 @@ We're starting with the same plot as above, but instead of the points + boxplot,
 ```r
 gapminder %>% 
   filter(continent == "Americas") %>% 
-  ggplot(aes(country, lifeExp)) + 
-  geom_point() +
-  geom_boxplot()
+  ggplot(aes( x = country, y = lifeExp)) + 
+  geom_density_ridges(bandwidth = 50)
+```
+
+```
+## Error: geom_density_ridges requires the following missing aesthetics: y
 ```
 
 ![](s03b_ggplot_p2-exercise_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
