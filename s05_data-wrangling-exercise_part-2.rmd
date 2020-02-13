@@ -25,10 +25,13 @@ knitr::opts_chunk$set(error = TRUE)
 # Let's review some `dplyr` syntax
 
 Load the `tidyverse` package.
-    
+
+
 ```{r load packages, warning = FALSE, message = FALSE}
 # load your packages here:
-library(FILL_THIS_IN)
+library(tidyverse)
+library(dplyr)
+library(gapminder)
 ```
     
 
@@ -43,11 +46,18 @@ all of the commands in a task using the pipe `%>%`.
    with a descriptive object name.
 
 ```{r}
+mtcars_filt <-mtcars %>%
+  as.tibble() %>% 
+  filter(cyl == 6) %>% 
+  select(mpg, hp)
+  
 ```
 
 2. Print the results from Task 1 in an appealing way by using `knitr::kable()`.
 
 ```{r}
+mtcars_filt %>% 
+  knitr::kable()
 ```
 
 Let's use the `iris` dataset. Complete the following tasks. Chain together
@@ -56,8 +66,14 @@ all of the commands in a task using the pipe `%>%`.
 3. Rename the variables to be all lowercase and to separate words with "_"
    instead of ".". Put the species name variable first. Store this result as 
    a new object.
-
 ```{r}
+lower_iris <- iris %>% 
+  rename(sepal_length = Sepal.Length) %>% 
+  rename(sepal_width = Sepal.Width) %>% 
+  rename(petal_length = Petal.Length) %>% 
+  rename(petal_width = Petal.Width) %>% 
+  rename(species = Species) %>% 
+  select(species, sepal_length, sepal_width, petal_length, petal_width)
 ```
 
 4. Using the data from Task 3, plot the sepal width for each species. Perhaps 
@@ -65,18 +81,33 @@ all of the commands in a task using the pipe `%>%`.
    axis labels nicely.
 
 ```{r}
+lower_iris %>% 
+  ggplot(aes(x=sepal_width,y=species,)) +
+    geom_jitter()
 ```
 
 5. `iris` expresses all of the measurements in centimeters. Convert them to 
    inches (1 in = 2.54 cm). Store this dataset as a new object.
 
 ```{r}
+iris_inches <-
+  lower_iris %>% 
+  mutate(sepal_length = sepal_length / 2.54) %>% 
+mutate(sepal_width = sepal_width / 2.54) %>% 
+  mutate(petal_width = petal_width / 2.54) %>% 
+  mutate(petal_length = petal_length / 2.54) %>% 
+  print()
+
 ```
 
 6. Using the data from Task 5, plot the relationship between sepal width and
    sepal length. Indicate species using color and point shape.
 
 ```{r}
+iris_inches %>% 
+  ggplot(aes(x = sepal_width, y = sepal_length)) +
+  geom_point(aes(color = species, shape = species))
+  
 ```
 
 7. Using the data from Task 5, plot the relationship between sepal width and
@@ -84,6 +115,11 @@ all of the commands in a task using the pipe `%>%`.
    (facet).
 
 ```{r}
+iris_inches %>% 
+  ggplot(aes(x = sepal_width, y = sepal_length)) + 
+  geom_point(aes(color = species, shape = species)) +
+  facet_grid(rows = NULL, cols = vars(species)) %>% 
+  print()
 ```
 
 
@@ -100,10 +136,11 @@ Let's do some practice with grouping (and ungrouping) and summarizing data frame
    (b) Add the corresponding country to the tibble, too. 
    (c) Arrange by min life expectancy.
 
+this is also rounding!
 ```{r}
 gapminder %>% 
-  group_by(FILL_THIS_IN) %>% 
-  FILL_THIS_IN(min_life = min(lifeExp))
+  group_by(continent, year) %>% 
+  summarise(min_life = min(round(lifeExp, -1)))
 ```
 
 
@@ -112,8 +149,8 @@ in the `psych::bfi` dataset. Be sure to handle `NA`!
 
 ```{r}
 psych::bfi %>%
-  as_tibble() %>% 
-  select(A1:A5) %>% 
+  as_tibble(rownames = "id") %>% 
+  select(id, A1:A5) %>% 
   rowwise() %>% 
   mutate(A_mean = mean(c(A1, A2, A3, A4, A5), na.rm = TRUE)) %>% 
   ungroup()
@@ -131,7 +168,6 @@ For example, `pmin()` computes the "parallel min" across the vectors it receives
 
 ```{r}
 psych::bfi %>% 
-  as_tibble() %>% 
   select(A1:A5) %>% 
   mutate(A_min = pmin(A1, A2, A3, A4, A5))
 ```
@@ -167,13 +203,24 @@ psych::bfi %>%
 
 3. Let's use `psych::bfi` and make a new data frame that has
    (1) each participant's educational level (convert it to a categorical variable
-   using `factor*()`) and the mean score for each of the Big Five scales for each 
+   using `factor()`) and the mean score for each of the Big Five scales for each 
    participant. Store this data frame as a new object.
-   
+
 ```{r}
-FILL_THIS_IN <-
+edu_lev <-
   psych::bfi %>% 
-  FILL_THIS_IN(FILL_THIS_IN)
+  mutate(education = factor(education)) %>% 
+  rowwise() %>% 
+  mutate(A_mean = mean(c(A1, A2, A3, A4, A5), na.rm = TRUE)) %>% 
+mutate(C_mean = mean(c(C1, C2, C3, C4, C5), na.rm = TRUE)) %>% 
+mutate(E_mean = mean(c(E1, E2, E3, E4, E5), na.rm = TRUE)) %>% 
+mutate(N_mean = mean(c(N1, N2, N3, N4, N5), na.rm = TRUE)) %>% 
+mutate(O_mean = mean(c(O1, O2, O3, O4, O5), na.rm = TRUE),
+       mutate(education = education)) %>% 
+  ungroup() %>% 
+  print()
+
+```
 ```
 
 4. Use the data from Task 3 to summarize the distributions of Big Five scores 
@@ -181,9 +228,9 @@ FILL_THIS_IN <-
    each score in each group). Also report the sample size within each group.
    
 ```{r}
-FILL_THIS_IN %>% 
-  FILL_THIS_IN(FILL_THIS_IN) %>% 
-  FILL_THIS_IN(FILL_THIS_IN)
+edu_lev %>% 
+  group_by(education) %>% 
+  summarize_at(.vars = vars(A, C, O, N, E), .funs = funs(mean = mean, sd = sd))
 ```  
 
 
