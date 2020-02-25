@@ -126,24 +126,34 @@ guest %>%
   DT::datatable(rownames = FALSE)
 ```
 
-<!--html_preserve--><div id="htmlwidget-64f7e1bdc34402598a5d" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-64f7e1bdc34402598a5d">{"x":{"filter":"none","data":[[1,1,1,1,2,2,3,4,5,5,5,6,6,7,7,8,9,10,11,12,12,12,12,12,13,13,14,14,15,15],["Sommer Medrano","Phillip Medrano","Blanka Medrano","Emaan Medrano","Blair Park","Nigel Webb","Sinead English","Ayra Marks","Atlanta Connolly","Denzel Connolly","Chanelle Shah","Jolene Welsh","Hayley Booker","Amayah Sanford","Erika Foley","Ciaron Acosta","Diana Stuart","Cosmo Dunkley","Cai Mcdaniel","Daisy-May Caldwell","Martin Caldwell","Violet Caldwell","Nazifa Caldwell","Eric Caldwell","Rosanna Bird","Kurtis Frost","Huma Stokes","Samuel Rutledge","Eddison Collier","Stewart Nicholls"],["PENDING","vegetarian","chicken","PENDING","chicken",null,"PENDING","vegetarian","PENDING","fish","chicken",null,"vegetarian",null,"PENDING","PENDING","vegetarian","PENDING","fish","chicken","PENDING","PENDING","chicken","chicken","vegetarian","PENDING",null,"chicken","PENDING","chicken"],["PENDING","Menu C","Menu A","PENDING","Menu C",null,"PENDING","Menu B","PENDING","Menu B","Menu C",null,"Menu C","PENDING","PENDING","Menu A","Menu C","PENDING","Menu C","Menu B","PENDING","PENDING","PENDING","Menu B","Menu C","PENDING",null,"Menu C","PENDING","Menu B"],["PENDING","CONFIRMED","CONFIRMED","PENDING","CONFIRMED","CANCELLED","PENDING","PENDING","PENDING","CONFIRMED","CONFIRMED","CANCELLED","CONFIRMED","CANCELLED","PENDING","PENDING","CONFIRMED","PENDING","CONFIRMED","CONFIRMED","PENDING","PENDING","PENDING","CONFIRMED","CONFIRMED","PENDING","CANCELLED","CONFIRMED","PENDING","CONFIRMED"],["PENDING","CONFIRMED","CONFIRMED","PENDING","CONFIRMED","CANCELLED","PENDING","PENDING","PENDING","CONFIRMED","CONFIRMED","CANCELLED","CONFIRMED","PENDING","PENDING","PENDING","CONFIRMED","PENDING","CONFIRMED","CONFIRMED","PENDING","PENDING","PENDING","CONFIRMED","CONFIRMED","PENDING","CANCELLED","CONFIRMED","PENDING","CONFIRMED"],["PENDING","CONFIRMED","CONFIRMED","PENDING","CONFIRMED","CANCELLED","PENDING","PENDING","PENDING","CONFIRMED","CONFIRMED","CANCELLED","CONFIRMED","PENDING","PENDING","PENDING","CONFIRMED","PENDING","CONFIRMED","CONFIRMED","PENDING","PENDING","PENDING","CONFIRMED","CONFIRMED","PENDING","CANCELLED","CONFIRMED","PENDING","CONFIRMED"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>party<\/th>\n      <th>name<\/th>\n      <th>meal_wedding<\/th>\n      <th>meal_brunch<\/th>\n      <th>attendance_wedding<\/th>\n      <th>attendance_brunch<\/th>\n      <th>attendance_golf<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-558c1cda403e45b87c87" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-558c1cda403e45b87c87">{"x":{"filter":"none","data":[[1,1,1,1,2,2,3,4,5,5,5,6,6,7,7,8,9,10,11,12,12,12,12,12,13,13,14,14,15,15],["Sommer Medrano","Phillip Medrano","Blanka Medrano","Emaan Medrano","Blair Park","Nigel Webb","Sinead English","Ayra Marks","Atlanta Connolly","Denzel Connolly","Chanelle Shah","Jolene Welsh","Hayley Booker","Amayah Sanford","Erika Foley","Ciaron Acosta","Diana Stuart","Cosmo Dunkley","Cai Mcdaniel","Daisy-May Caldwell","Martin Caldwell","Violet Caldwell","Nazifa Caldwell","Eric Caldwell","Rosanna Bird","Kurtis Frost","Huma Stokes","Samuel Rutledge","Eddison Collier","Stewart Nicholls"],["PENDING","vegetarian","chicken","PENDING","chicken",null,"PENDING","vegetarian","PENDING","fish","chicken",null,"vegetarian",null,"PENDING","PENDING","vegetarian","PENDING","fish","chicken","PENDING","PENDING","chicken","chicken","vegetarian","PENDING",null,"chicken","PENDING","chicken"],["PENDING","Menu C","Menu A","PENDING","Menu C",null,"PENDING","Menu B","PENDING","Menu B","Menu C",null,"Menu C","PENDING","PENDING","Menu A","Menu C","PENDING","Menu C","Menu B","PENDING","PENDING","PENDING","Menu B","Menu C","PENDING",null,"Menu C","PENDING","Menu B"],["PENDING","CONFIRMED","CONFIRMED","PENDING","CONFIRMED","CANCELLED","PENDING","PENDING","PENDING","CONFIRMED","CONFIRMED","CANCELLED","CONFIRMED","CANCELLED","PENDING","PENDING","CONFIRMED","PENDING","CONFIRMED","CONFIRMED","PENDING","PENDING","PENDING","CONFIRMED","CONFIRMED","PENDING","CANCELLED","CONFIRMED","PENDING","CONFIRMED"],["PENDING","CONFIRMED","CONFIRMED","PENDING","CONFIRMED","CANCELLED","PENDING","PENDING","PENDING","CONFIRMED","CONFIRMED","CANCELLED","CONFIRMED","PENDING","PENDING","PENDING","CONFIRMED","PENDING","CONFIRMED","CONFIRMED","PENDING","PENDING","PENDING","CONFIRMED","CONFIRMED","PENDING","CANCELLED","CONFIRMED","PENDING","CONFIRMED"],["PENDING","CONFIRMED","CONFIRMED","PENDING","CONFIRMED","CANCELLED","PENDING","PENDING","PENDING","CONFIRMED","CONFIRMED","CANCELLED","CONFIRMED","PENDING","PENDING","PENDING","CONFIRMED","PENDING","CONFIRMED","CONFIRMED","PENDING","PENDING","PENDING","CONFIRMED","CONFIRMED","PENDING","CANCELLED","CONFIRMED","PENDING","CONFIRMED"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>party<\/th>\n      <th>name<\/th>\n      <th>meal_wedding<\/th>\n      <th>meal_brunch<\/th>\n      <th>attendance_wedding<\/th>\n      <th>attendance_brunch<\/th>\n      <th>attendance_golf<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 1. Put "meal" and "attendance" as their own columns, with the events living in a new column.
 
 
 ```r
 (guest_long <- guest %>% 
-  pivot_longer(cols      = c(-party, -names, -()), 
-               names_to  = FILL_THIS_IN,
-               FILL_THIS_IN))
+  pivot_longer(cols      = c(-party, -name), 
+               names_to  = c(".value", "event"),
+               names_sep = "_"))
 ```
 
 ```
-## Error: <text>:2:48: unexpected ')'
-## 1: (guest_long <- guest %>% 
-## 2:   pivot_longer(cols      = c(-party, -names, -()
-##                                                   ^
+## # A tibble: 90 x 5
+##    party name            event   meal       attendance
+##    <dbl> <chr>           <chr>   <chr>      <chr>     
+##  1     1 Sommer Medrano  wedding PENDING    PENDING   
+##  2     1 Sommer Medrano  brunch  PENDING    PENDING   
+##  3     1 Sommer Medrano  golf    <NA>       PENDING   
+##  4     1 Phillip Medrano wedding vegetarian CONFIRMED 
+##  5     1 Phillip Medrano brunch  Menu C     CONFIRMED 
+##  6     1 Phillip Medrano golf    <NA>       CONFIRMED 
+##  7     1 Blanka Medrano  wedding chicken    CONFIRMED 
+##  8     1 Blanka Medrano  brunch  Menu A     CONFIRMED 
+##  9     1 Blanka Medrano  golf    <NA>       CONFIRMED 
+## 10     1 Emaan Medrano   wedding PENDING    PENDING   
+## # … with 80 more rows
 ```
 
 2. Use `tidyr::separate()` to split the name into two columns: "first" and 
@@ -152,41 +162,82 @@ guest %>%
 
 ```r
 guest_long %>% 
-  separate(FILL_THIS_IN, into = FILL_THIS_IN)
+  separate(name, sep = " ", into = c("first", "last")) %>% 
+  unite(col = "name", first, last, sep = " ")
 ```
 
 ```
-## Error in eval(lhs, parent, parent): object 'guest_long' not found
-```
-
-```r
-  # unite(col = "name", FILL_THIS_IN, sep = FILL_THIS_IN)
+## # A tibble: 90 x 5
+##    party name            event   meal       attendance
+##    <dbl> <chr>           <chr>   <chr>      <chr>     
+##  1     1 Sommer Medrano  wedding PENDING    PENDING   
+##  2     1 Sommer Medrano  brunch  PENDING    PENDING   
+##  3     1 Sommer Medrano  golf    <NA>       PENDING   
+##  4     1 Phillip Medrano wedding vegetarian CONFIRMED 
+##  5     1 Phillip Medrano brunch  Menu C     CONFIRMED 
+##  6     1 Phillip Medrano golf    <NA>       CONFIRMED 
+##  7     1 Blanka Medrano  wedding chicken    CONFIRMED 
+##  8     1 Blanka Medrano  brunch  Menu A     CONFIRMED 
+##  9     1 Blanka Medrano  golf    <NA>       CONFIRMED 
+## 10     1 Emaan Medrano   wedding PENDING    PENDING   
+## # … with 80 more rows
 ```
 
 3. Which parties still have a "PENDING" status for all members and all events?
 
 
 ```r
-FILL_THIS_IN %>% 
-  group_by(party) %>% 
+guest_long %>% 
+  group_by(party, event) %>% 
   summarize(all_pending = all(attendance == "PENDING"))
 ```
 
 ```
-## Error in eval(lhs, parent, parent): object 'FILL_THIS_IN' not found
+## # A tibble: 45 x 3
+## # Groups:   party [15]
+##    party event   all_pending
+##    <dbl> <chr>   <lgl>      
+##  1     1 brunch  FALSE      
+##  2     1 golf    FALSE      
+##  3     1 wedding FALSE      
+##  4     2 brunch  FALSE      
+##  5     2 golf    FALSE      
+##  6     2 wedding FALSE      
+##  7     3 brunch  TRUE       
+##  8     3 golf    TRUE       
+##  9     3 wedding TRUE       
+## 10     4 brunch  TRUE       
+## # … with 35 more rows
 ```
 
 4. Which parties still have a "PENDING" status for all members for the wedding?
 
 
 ```r
-FILL_THIS_IN %>% 
+guest_long %>% 
   group_by(party) %>% 
-  summarize(pending_wedding = all(FILL_THIS_IN == "PENDING"))
+  summarize(pending_wedding = all(event == "PENDING"))
 ```
 
 ```
-## Error in eval(lhs, parent, parent): object 'FILL_THIS_IN' not found
+## # A tibble: 15 x 2
+##    party pending_wedding
+##    <dbl> <lgl>          
+##  1     1 FALSE          
+##  2     2 FALSE          
+##  3     3 FALSE          
+##  4     4 FALSE          
+##  5     5 FALSE          
+##  6     6 FALSE          
+##  7     7 FALSE          
+##  8     8 FALSE          
+##  9     9 FALSE          
+## 10    10 FALSE          
+## 11    11 FALSE          
+## 12    12 FALSE          
+## 13    13 FALSE          
+## 14    14 FALSE          
+## 15    15 FALSE
 ```
 
 
@@ -195,14 +246,28 @@ FILL_THIS_IN %>%
 
 ```r
 guest_long %>% 
-  pivot_wider(id_cols     = FILL_THIS_IN, 
-              names_from  = FILL_THIS_IN, 
-              names_sep   = "_", 
-              values_from = FILL_THIS_IN)
+  pivot_wider(id_cols     = c("party", "name"),
+              names_from  = c("event"), 
+              names_sep   = "_" , 
+              values_from = c("meal", "attendance")) %>% 
+  select(-meal_golf)
 ```
 
 ```
-## Error in eval(lhs, parent, parent): object 'guest_long' not found
+## # A tibble: 30 x 7
+##    party name  meal_wedding meal_brunch attendance_wedd… attendance_brun…
+##    <dbl> <chr> <chr>        <chr>       <chr>            <chr>           
+##  1     1 Somm… PENDING      PENDING     PENDING          PENDING         
+##  2     1 Phil… vegetarian   Menu C      CONFIRMED        CONFIRMED       
+##  3     1 Blan… chicken      Menu A      CONFIRMED        CONFIRMED       
+##  4     1 Emaa… PENDING      PENDING     PENDING          PENDING         
+##  5     2 Blai… chicken      Menu C      CONFIRMED        CONFIRMED       
+##  6     2 Nige… <NA>         <NA>        CANCELLED        CANCELLED       
+##  7     3 Sine… PENDING      PENDING     PENDING          PENDING         
+##  8     4 Ayra… vegetarian   Menu B      PENDING          PENDING         
+##  9     5 Atla… PENDING      PENDING     PENDING          PENDING         
+## 10     5 Denz… fish         Menu B      CONFIRMED        CONFIRMED       
+## # … with 20 more rows, and 1 more variable: attendance_golf <chr>
 ```
 
 6. You also have a list of emails for each party, in this worksheet under the 
@@ -212,11 +277,24 @@ guest_long %>%
 
 ```r
 email %>% 
-  separate_rows(FILL_THIS_IN, sep = FILL_THIS_IN)
+  separate_rows(guest, sep = ", ")
 ```
 
 ```
-## Error in .f(.x[[i]], ...): object 'FILL_THIS_IN' not found
+## # A tibble: 28 x 2
+##    guest           email              
+##    <chr>           <chr>              
+##  1 Sommer Medrano  sommm@gmail.com    
+##  2 Phillip Medrano sommm@gmail.com    
+##  3 Blanka Medrano  sommm@gmail.com    
+##  4 Emaan Medrano   sommm@gmail.com    
+##  5 Blair Park      bpark@gmail.com    
+##  6 Nigel Webb      bpark@gmail.com    
+##  7 Sinead English  singlish@hotmail.ca
+##  8 Ayra Marks      marksa42@gmail.com 
+##  9 Jolene Welsh    jw1987@hotmail.com 
+## 10 Hayley Booker   jw1987@hotmail.com 
+## # … with 18 more rows
 ```
 
 
