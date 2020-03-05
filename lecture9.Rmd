@@ -17,6 +17,8 @@ install.packages("tidyverse")
 library(readxl) 
 library(haven)
 install.packages("svglite")
+install.packages("export")
+install.packages("ggplot2", dependencies = TRUE)
 ```
 
 
@@ -134,6 +136,6 @@ clevel_plot <-
 
 ```{r}
 dir.create(here::here("output", "figures"), recursive = TRUE)
-ggsave(here::here("output", "figures", "clevel_extraversion.jpeg"), clevel_plot)
+ggsave(here::here("output", "figures", "clevel_extraversion.svg"), clevel_plot)
 ```
 
