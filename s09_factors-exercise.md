@@ -6,25 +6,43 @@ output:
     theme: paper
 ---
 
-```{r allow errors, echo = FALSE}
-knitr::opts_chunk$set(error = TRUE)
-```
 
-```{r}
+
+
+```r
 library(gapminder)
 library(tidyverse) # includes, among others, `forcats`
 ```
 
+```
+## ── Attaching packages ───────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──
+```
+
+```
+## ✔ ggplot2 3.2.1     ✔ purrr   0.3.3
+## ✔ tibble  2.1.3     ✔ dplyr   0.8.4
+## ✔ tidyr   1.0.0     ✔ stringr 1.4.0
+## ✔ readr   1.3.1     ✔ forcats 0.4.0
+```
+
+```
+## ── Conflicts ──────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+```
+
 ## Motivating the need for factors in R
 
-```{r}
+
+```r
 ?str
 
 ?coord_flip
 ```
 
 
-```{r}
+
+```r
 df1 <- gapminder %>%
   filter(country %in% c("United States", "Mexico"), year > 2000) %>%
   droplevels()
@@ -33,11 +51,62 @@ df2 <- gapminder %>%
   droplevels()
 
 c(df1$country, df2$country)
+```
 
+```
+## [1] 1 1 2 2 1 1 2 2
+```
+
+```r
 fct_c(df1$country, df2$country)
+```
 
+```
+## [1] Mexico        Mexico        United States United States France       
+## [6] France        Germany       Germany      
+## Levels: Mexico United States France Germany
+```
+
+```r
 bind_rows(df1, df2)
+```
 
+```
+## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character
+```
+
+```
+## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+## into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+## into character vector
+```
+
+```
+## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character
+```
+
+```
+## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+## into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+## into character vector
+```
+
+```
+## # A tibble: 8 x 6
+##   country       continent  year lifeExp       pop gdpPercap
+##   <chr>         <chr>     <int>   <dbl>     <int>     <dbl>
+## 1 Mexico        Americas   2002    74.9 102479927    10742.
+## 2 Mexico        Americas   2007    76.2 108700891    11978.
+## 3 United States Americas   2002    77.3 287675526    39097.
+## 4 United States Americas   2007    78.2 301139947    42952.
+## 5 France        Europe     2002    79.6  59925035    28926.
+## 6 France        Europe     2007    80.7  61083916    30470.
+## 7 Germany       Europe     2002    78.7  82350671    30036.
+## 8 Germany       Europe     2007    79.4  82400996    32170.
 ```
 
 ### Activity 1: Using factors for plotting 
@@ -73,7 +142,8 @@ We can make a few observations:
 in the call to `factor()`. Use, `drop = FALSE` to tell the plot not to drop 
 unused levels.
 
-```{r}
+
+```r
 gapminder %>% 
   filter(year == 1997) %>% 
   mutate(life_level = factor(
@@ -93,6 +163,8 @@ gapminder %>%
   scale_x_discrete(drop = FALSE)
 ```
 
+![](s09_factors-exercise_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
 ## Activity 2: Inspecting factors
 
 In Activity 1, we created our own factors, so now let's explore what 
@@ -107,17 +179,58 @@ answer the following questions:
 - How many levels? What are they?
 - What integer is used to represent factor "Asia"?
 
-```{r}
+
+```r
 class(gapminder$continent)
+```
 
+```
+## [1] "factor"
+```
+
+```r
 levels(gapminder$continent)
+```
 
+```
+## [1] "Africa"   "Americas" "Asia"     "Europe"   "Oceania"
+```
+
+```r
 nlevels(gapminder$continent)
+```
 
+```
+## [1] 5
+```
+
+```r
 str(gapminder$continent)
+```
 
+```
+##  Factor w/ 5 levels "Africa","Americas",..: 3 3 3 3 3 3 3 3 3 3 ...
+```
+
+```r
 gapminder
+```
 
+```
+## # A tibble: 1,704 x 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    <fct>       <fct>     <int>   <dbl>    <int>     <dbl>
+##  1 Afghanistan Asia       1952    28.8  8425333      779.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.
+##  6 Afghanistan Asia       1977    38.4 14880372      786.
+##  7 Afghanistan Asia       1982    39.9 12881816      978.
+##  8 Afghanistan Asia       1987    40.8 13867957      852.
+##  9 Afghanistan Asia       1992    41.7 16317921      649.
+## 10 Afghanistan Asia       1997    41.8 22227415      635.
+## # … with 1,694 more rows
 ```
 
 ### **2.2** Exploring `gapminder$country`
@@ -128,19 +241,26 @@ Let's explore what else we can do with factors. Answer the following questions:
 - Filter `gapminder` dataset by 5 countries of your choice. How many levels are 
   in your filtered dataset?
 
-```{r}
+
+```r
 nlevels(gapminder$country)
+```
 
+```
+## [1] 142
+```
 
-
+```r
 h_countries <- c("Egypt", "Haiti", "Romania", "Thailand", "Venezuela")
 
 h_gap <- gapminder %>%
   filter(country %in% h_countries)
 
 nlevels(h_gap$country)
+```
 
-
+```
+## [1] 142
 ```
 
 ## Dropping unused levels
@@ -151,11 +271,14 @@ The function `droplevels()` operates on all the factors in a data frame or on a
 single factor. The function `forcats::fct_drop()` operates on a factor and does 
 not drop `NA` values.
 
-```{r}
+
+```r
 h_gap_dropped <- FILL_IN_THIS %>% 
   droplevels()
+```
 
-
+```
+## Error in eval(lhs, parent, parent): object 'FILL_IN_THIS' not found
 ```
 
 ## Changing the order of levels
@@ -164,18 +287,29 @@ Let's say we wanted to re-order the levels of a factor using a new metric - say,
 
 We should first produce a frequency table as a tibble using `dplyr::count()`:
 
-```{r}
 
+```r
 gapminder %>% 
   count(continent)
+```
 
+```
+## # A tibble: 5 x 2
+##   continent     n
+##   <fct>     <int>
+## 1 Africa      624
+## 2 Americas    300
+## 3 Asia        396
+## 4 Europe      360
+## 5 Oceania      24
 ```
 
 The table is nice, but it would be better to visualize the data.
 Factors are most useful/helpful when plotting data.
 So let's first plot this:
 
-```{r}
+
+```r
 gapminder %>%
   ggplot() +
   geom_bar(aes(continent)) +
@@ -183,6 +317,8 @@ gapminder %>%
   theme_bw() +
   ylab("Number of entries") + xlab("Continent")
 ```
+
+![](s09_factors-exercise_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
 
 Think about how levels are normally ordered. 
 It turns out that by default, R always sorts levels in alphabetical order. 
@@ -196,7 +332,8 @@ However, it is often preferable to order the levels according to some principle:
   might be useful.
 - The function `fct_rev()` will sort them in the opposite order.
 
-```{r}
+
+```r
 gapminder %>%
   ggplot() +
   geom_bar(aes(fct_infreq(continent))) +
@@ -205,6 +342,8 @@ gapminder %>%
   ylab("Number of entries") + xlab("Continent")
 ```
 
+![](s09_factors-exercise_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+
 Section 9.6 of Jenny Bryan's [notes](https://stat545.com/factors-boss.html#reorder-factors) has some helpful examples.
 
   4. Another variable. 
@@ -212,7 +351,8 @@ Section 9.6 of Jenny Bryan's [notes](https://stat545.com/factors-boss.html#reord
   - For example, if we wanted to bring back our example of ordering `gapminder` 
     countries by life expectancy, we can visualize the results using `fct_reorder()`. 
 
-```{r}
+
+```r
 ##  default summarizing function is median()
 gapminder %>%
   ggplot() +
@@ -222,10 +362,13 @@ gapminder %>%
   xlab("Continent") + ylab("Number of entries") 
 ```
 
+![](s09_factors-exercise_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+
 Use `fct_reorder2()` when you have a line chart of a quantitative x against 
 another quantitative y and your factor provides the color. 
 
-```{r}
+
+```r
 ## order by life expectancy 
 ggplot(h_gap, aes(x = year, y = lifeExp,
                   color = fct_reorder2(country, year, lifeExp))) +
@@ -233,18 +376,23 @@ ggplot(h_gap, aes(x = year, y = lifeExp,
   labs(color = "Country")
 ```
 
+![](s09_factors-exercise_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+
 ## Change order of the levels manually
 
 This might be useful if you are preparing a report for say, the state of affairs 
 in Africa.
 
-```{r}
+
+```r
 gapminder %>%
   ggplot() +
   geom_bar(aes(fct_relevel(continent, "Oceania"))) +
   coord_flip() +
   theme_bw() 
 ```
+
+![](s09_factors-exercise_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 
 More details on reordering factor levels by hand can be found 
 [here](https://forcats.tidyverse.org/reference/fct_relevel.html).
@@ -258,22 +406,24 @@ be called "Black" and "Brown" -- this is called recoding.
 Lets recode `Oceania` and the `Americas` in the graph above as abbreviations 
 `OCN` and `AME` respectively using the function `fct_recode()`.
 
-```{r}
+
+```r
 gapminder %>%
   ggplot() +
   geom_bar(aes(fct_recode(continent, "OCN" = "Oceania", "AME" = "Americas"))) +
   coord_flip() +
   theme_bw()
-
-
 ```
+
+![](s09_factors-exercise_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
 
 ## Grow a factor (OPTIONAL)
 
 Let’s create two data frames,`df1` and `df2` each with data from two countries, 
 dropping unused factor levels.
 
-```{r}
+
+```r
 df1 <- gapminder %>%
   filter(country %in% c("United States", "Mexico"), year > 2000) %>%
   droplevels()
@@ -285,20 +435,71 @@ df2 <- gapminder %>%
 The country factors in `df1` and `df2` have different levels.
 Can you just combine them using `c()`?
 
-```{r}
+
+```r
 c(df1$country, df2$country)
+```
+
+```
+## [1] 1 1 2 2 1 1 2 2
 ```
 
 Use `fct_c()` to perform `c()`, but also combine the levels of the two factor
 variables:
 
-```{r}
+
+```r
 fct_c(df1$country, df2$country)
+```
+
+```
+## [1] Mexico        Mexico        United States United States France       
+## [6] France        Germany       Germany      
+## Levels: Mexico United States France Germany
 ```
 
 Explore how different forms of row binding work behave here, in terms of the 
 country variable in the result. 
 
-```{r}
+
+```r
 bind_rows(df1, df2)
+```
+
+```
+## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character
+```
+
+```
+## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+## into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+## into character vector
+```
+
+```
+## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character
+```
+
+```
+## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+## into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
+## into character vector
+```
+
+```
+## # A tibble: 8 x 6
+##   country       continent  year lifeExp       pop gdpPercap
+##   <chr>         <chr>     <int>   <dbl>     <int>     <dbl>
+## 1 Mexico        Americas   2002    74.9 102479927    10742.
+## 2 Mexico        Americas   2007    76.2 108700891    11978.
+## 3 United States Americas   2002    77.3 287675526    39097.
+## 4 United States Americas   2007    78.2 301139947    42952.
+## 5 France        Europe     2002    79.6  59925035    28926.
+## 6 France        Europe     2007    80.7  61083916    30470.
+## 7 Germany       Europe     2002    78.7  82350671    30036.
+## 8 Germany       Europe     2007    79.4  82400996    32170.
 ```
