@@ -32,7 +32,7 @@ Hint: You can add the `suppressPackageStartupMessages()` function around the
     
 ```{r load packages, warning = FALSE, message = FALSE}
 # load your packages here:
-library(gapminder)
+library()
 library(dplyr)
 library(tidyverse)
 ```
